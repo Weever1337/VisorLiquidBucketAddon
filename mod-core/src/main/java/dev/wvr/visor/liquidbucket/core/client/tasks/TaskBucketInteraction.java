@@ -1,8 +1,8 @@
-package dev.wvr.visor.liquidbacket.core.client.tasks;
+package dev.wvr.visor.liquidbucket.core.client.tasks;
 
-import dev.wvr.visor.liquidbacket.core.common.AddonNetworking;
-import dev.wvr.visor.liquidbacket.core.common.LiquidUtil;
-import dev.wvr.visor.liquidbacket.core.common.network.NetworkHelper;
+import dev.wvr.visor.liquidbucket.core.common.AddonNetworking;
+import dev.wvr.visor.liquidbucket.core.common.LiquidUtil;
+import dev.wvr.visor.liquidbucket.core.common.network.NetworkHelper;
 import io.netty.buffer.Unpooled;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;

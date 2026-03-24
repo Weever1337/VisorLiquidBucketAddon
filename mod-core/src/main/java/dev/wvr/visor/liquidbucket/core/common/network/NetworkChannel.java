@@ -1,4 +1,4 @@
-package dev.wvr.visor.liquidbacket.core.common.network;
+package dev.wvr.visor.liquidbucket.core.common.network;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;

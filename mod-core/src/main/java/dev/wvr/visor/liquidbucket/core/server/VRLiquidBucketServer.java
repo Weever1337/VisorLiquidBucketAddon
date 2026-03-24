@@ -1,7 +1,7 @@
-package dev.wvr.visor.liquidbacket.core.server;
+package dev.wvr.visor.liquidbucket.core.server;
 
-import dev.wvr.visor.liquidbacket.core.common.AddonNetworking;
-import dev.wvr.visor.liquidbacket.core.common.VRLiquidBucket;
+import dev.wvr.visor.liquidbucket.core.common.AddonNetworking;
+import dev.wvr.visor.liquidbucket.core.common.VRLiquidBucket;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

@@ -1,13 +1,13 @@
-package dev.wvr.visor.liquidbacket.forge;
+package dev.wvr.visor.liquidbucket.forge;
 
 import org.vmstudio.visor.api.ModLoader;
 import org.vmstudio.visor.api.VisorAPI;
-import dev.wvr.visor.liquidbacket.core.client.AddonClient;
-import dev.wvr.visor.liquidbacket.core.common.FallingFluidManager;
-import dev.wvr.visor.liquidbacket.core.common.VRLiquidBucket;
-import dev.wvr.visor.liquidbacket.core.common.network.NetworkHelper;
-import dev.wvr.visor.liquidbacket.core.server.VRLiquidBucketServer;
-import dev.wvr.visor.liquidbacket.forge.network.ForgeNetworkChannel;
+import dev.wvr.visor.liquidbucket.core.client.AddonClient;
+import dev.wvr.visor.liquidbucket.core.common.FallingFluidManager;
+import dev.wvr.visor.liquidbucket.core.common.VRLiquidBucket;
+import dev.wvr.visor.liquidbucket.core.common.network.NetworkHelper;
+import dev.wvr.visor.liquidbucket.core.server.VRLiquidBucketServer;
+import dev.wvr.visor.liquidbucket.forge.network.ForgeNetworkChannel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;

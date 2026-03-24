@@ -1,4 +1,4 @@
-package dev.wvr.visor.liquidbacket.core.common;
+package dev.wvr.visor.liquidbucket.core.common;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;

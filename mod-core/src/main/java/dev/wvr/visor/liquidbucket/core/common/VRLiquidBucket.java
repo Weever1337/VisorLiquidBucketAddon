@@ -1,4 +1,4 @@
-package dev.wvr.visor.liquidbacket.core.common;
+package dev.wvr.visor.liquidbucket.core.common;
 
 public class VRLiquidBucket {
     public static final String MOD_ID = "visor_liquidbacket";

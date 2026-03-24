@@ -12,7 +12,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "dev.wvr.visor.liquidbacket.fabric.VRLiquidBucketFabric"
+      "dev.wvr.visor.liquidbucket.fabric.VRLiquidBucketFabric"
     ]
   },
   "depends": {
