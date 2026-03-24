@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "visor_liquidbacket",
+  "version": "${version}",
+
+  "name": "Visor Liquid Bucket",
+  "description": "Visor addon for scooping liquid and fish with VR controllers and vanilla buckets.",
+  "authors": [
+    "Weever"
+  ],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.wvr.visor.liquidbacket.fabric.VRLiquidBucketFabric"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.14.14",
+    "minecraft": ["1.20", "1.20.1"],
+    "java": ">=17"
+  },
+  "breaks": {
+    "visor": "<0.3.0"
+  }
+}
