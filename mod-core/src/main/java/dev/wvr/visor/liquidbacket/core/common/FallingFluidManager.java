@@ -70,6 +70,11 @@ public final class FallingFluidManager {
             }
 
             BlockPos nextPos = fluid.pos.below();
+            if (!level.isLoaded(nextPos)) { // hello to unloaded chunks
+                iterator.remove();
+                continue;
+            }
+
             if (!LiquidUtil.canFluidFallThrough(nextPos, level, fluid.fluid)) {
                 settleSource(level, fluid.pos, fluid.fluid);
                 iterator.remove();

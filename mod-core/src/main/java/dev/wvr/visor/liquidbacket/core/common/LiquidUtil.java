@@ -3,6 +3,7 @@ package dev.wvr.visor.liquidbacket.core.common;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -22,7 +23,6 @@ import org.vmstudio.visor.api.common.player.VRPose;
 import org.vmstudio.visor.api.server.player.VRServerPlayer;
 
 public class LiquidUtil {
-    public static final double MAX_HAND_TO_ENTITY_DISTANCE_SQR = 0.04D;
     public static final double MAX_CLIENT_TIP_TO_SERVER_HAND_DISTANCE_SQR = 1.44D;
     public static final double FLUID_PICKUP_DEPTH = 0.04D;
     public static final double BOTTLE_FILL_DEPTH = 0.08D;
@@ -33,8 +33,11 @@ public class LiquidUtil {
     public static final Vector3f BUCKET_TIP_OFFSET = new Vector3f(0.0F, -0.12F, -0.25F);
     
     public static final int SCOOP_COOLDOWN_TICKS = 12;
+    public static final int FISH_CAPTURE_COOLDOWN_TICKS = 4;
     public static final int LAVA_COOLDOWN_TICKS = 20;
-    public static final double FISH_CAPTURE_RADIUS = 0.4D;
+    public static final double FISH_CAPTURE_RADIUS = 0.65D;
+    public static final double FISH_CAPTURE_HITBOX_INFLATE = 0.20D;
+    public static final double FISH_CAPTURE_MAX_DISTANCE_SQR = 0.64D;
     
     public static Vec3 getInteractionTip(PlayerPoseClient pose, HandType handType, ItemStack heldStack) {
         return getInteractionTip(pose.getGripHand(handType), heldStack);
@@ -91,6 +94,11 @@ public class LiquidUtil {
     public static boolean isClientTipNearServerHand(VRServerPlayer vrPlayer, HandType handType, Vec3 handTipPos) {
         Vec3 serverHandPos = vrPlayer.getPoseData().getHand(handType).getPositionVec3();
         return serverHandPos.distanceToSqr(handTipPos) <= MAX_CLIENT_TIP_TO_SERVER_HAND_DISTANCE_SQR;
+    }
+
+    public static boolean isFishCatchTarget(Entity entity, Vec3 handTipPos) {
+        return entity.distanceToSqr(handTipPos) <= FISH_CAPTURE_MAX_DISTANCE_SQR
+                && entity.getBoundingBox().inflate(FISH_CAPTURE_HITBOX_INFLATE).contains(handTipPos);
     }
 
     public static @Nullable BlockPos findFluidStartPos(Level level, Vec3 fluidPos, FlowingFluid fluid) {

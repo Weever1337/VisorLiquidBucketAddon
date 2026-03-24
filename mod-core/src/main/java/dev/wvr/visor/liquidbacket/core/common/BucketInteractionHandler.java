@@ -132,11 +132,7 @@ public final class BucketInteractionHandler {
             return;
         }
 
-        if (entity.distanceToSqr(handTipPos) > LiquidUtil.MAX_HAND_TO_ENTITY_DISTANCE_SQR) {
-            return;
-        }
-
-        if (!entity.getBoundingBox().inflate(0.05D).contains(handTipPos)) {
+        if (!LiquidUtil.isFishCatchTarget(entity, handTipPos)) {
             return;
         }
 

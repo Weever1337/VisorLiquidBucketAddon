@@ -57,7 +57,6 @@ public class TaskBucketInteraction extends VisorTask {
 
         Level level = player.level();
         PlayerPoseClient pose = VisorAPI.client().getVRLocalPlayer().getPoseData(PlayerPoseType.TICK);
-
         for (HandType handType : HandType.values()) {
             tickCooldown(scoopCooldowns, handType);
             tickCooldown(lavaCooldowns, handType);
@@ -179,7 +178,7 @@ public class TaskBucketInteraction extends VisorTask {
             return;
         }
 
-        if (!nearestEntity.getBoundingBox().inflate(0.5D).contains(handTipPos)) {
+        if (!LiquidUtil.isFishCatchTarget(nearestEntity, handTipPos)) {
             return;
         }
 
@@ -188,7 +187,7 @@ public class TaskBucketInteraction extends VisorTask {
         buf.writeInt(nearestEntity.getId());
         writeVec3(buf, handTipPos);
         NetworkHelper.sendToServer(AddonNetworking.CATCH_FISH_C2S, buf);
-        scoopCooldowns.put(handType, LiquidUtil.SCOOP_COOLDOWN_TICKS);
+        scoopCooldowns.put(handType, LiquidUtil.FISH_CAPTURE_COOLDOWN_TICKS);
         VisorAPI.client().getInputManager().triggerHapticPulse(handType, 0.08F);
     }
 
