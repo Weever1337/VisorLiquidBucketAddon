@@ -1,5 +1,6 @@
 package dev.wvr.visor.liquidbacket.core.common;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -11,6 +12,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Bucketable;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
@@ -18,10 +20,9 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
-import org.vmstudio.visor.api.VisorAPI;
 import org.vmstudio.visor.api.common.HandType;
 import org.vmstudio.visor.api.server.player.VRServerPlayer;
 
@@ -160,6 +161,51 @@ public final class BucketInteractionHandler {
 
         entity.discard();
         player.level().gameEvent(player, GameEvent.ENTITY_INTERACT, entity.position());
+        player.swing(interactionHand, true);
+    }
+
+    public static void fluidBucket(ServerPlayer player, int handId, Vec3 handTipPos) {
+        HandType handType = HandType.fromInt(handId);
+        VRServerPlayer vrPlayer = LiquidUtil.getVrPlayer(player);
+        if (vrPlayer == null) {
+            return;
+        }
+
+        InteractionHand interactionHand = handType.asInteractionHand();
+        ItemStack heldStack = player.getItemInHand(interactionHand);
+        if (!(heldStack.getItem() instanceof BucketItem bucketItem)) {
+            return;
+        }
+
+        FlowingFluid fluid = LiquidUtil.getBucketFluid(heldStack);
+        if (fluid == null) {
+            return;
+        }
+
+        if (!LiquidUtil.isClientTipNearServerHand(vrPlayer, handType, handTipPos)) {
+            return;
+        }
+
+        BlockPos placementPos = LiquidUtil.findFluidStartPos(player.level(), handTipPos, fluid);
+        if (placementPos == null) {
+            return;
+        }
+
+        if (!player.level().mayInteract(player, placementPos) || !player.mayUseItemAt(placementPos, net.minecraft.core.Direction.UP, heldStack)) {
+            return;
+        }
+
+        if (!bucketItem.emptyContents(player, player.level(), placementPos, null)) {
+            return;
+        }
+
+        bucketItem.checkExtraContent(player, player.level(), heldStack, placementPos);
+        CriteriaTriggers.PLACED_BLOCK.trigger(player, placementPos, heldStack);
+        player.awardStat(Stats.ITEM_USED.get(heldStack.getItem()));
+        if (!player.getAbilities().instabuild) {
+            LiquidUtil.replaceHeldContainer(player, interactionHand, heldStack, BucketItem.getEmptySuccessItem(heldStack, player));
+        }
+        FallingFluidManager.trackFallingSource(player.serverLevel(), placementPos, fluid);
         player.swing(interactionHand, true);
     }
 

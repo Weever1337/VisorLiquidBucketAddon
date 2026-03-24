@@ -1,6 +1,6 @@
 package dev.wvr.visor.liquidbacket.fabric.network;
 
-import dev.wvr.visor.liquidbacket.core.network.NetworkChannel;
+import dev.wvr.visor.liquidbacket.core.common.network.NetworkChannel;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;

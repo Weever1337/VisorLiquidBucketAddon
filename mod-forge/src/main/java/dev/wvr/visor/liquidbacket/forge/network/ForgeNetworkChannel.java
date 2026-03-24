@@ -1,6 +1,6 @@
 package dev.wvr.visor.liquidbacket.forge.network;
 
-import dev.wvr.visor.liquidbacket.core.network.NetworkChannel;
+import dev.wvr.visor.liquidbacket.core.common.network.NetworkChannel;
 import io.netty.buffer.Unpooled;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;

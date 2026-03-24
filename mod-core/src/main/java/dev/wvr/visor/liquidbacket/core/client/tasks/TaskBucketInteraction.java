@@ -2,7 +2,7 @@ package dev.wvr.visor.liquidbacket.core.client.tasks;
 
 import dev.wvr.visor.liquidbacket.core.common.AddonNetworking;
 import dev.wvr.visor.liquidbacket.core.common.LiquidUtil;
-import dev.wvr.visor.liquidbacket.core.network.NetworkHelper;
+import dev.wvr.visor.liquidbacket.core.common.network.NetworkHelper;
 import io.netty.buffer.Unpooled;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
@@ -66,7 +66,7 @@ public class TaskBucketInteraction extends VisorTask {
             Vec3 handTipPos = LiquidUtil.getInteractionTip(pose, handType, heldStack);
             debugTipPositions.put(handType, shouldRenderDebugTip(heldStack) ? handTipPos : null);
             tryIgniteFromLava(level, handType, handTipPos);
-            tryUseBucket(player, heldStack, level, handType, handTipPos);
+            tryUseBucket(player, heldStack, level, pose, handType, handTipPos);
         }
     }
 
@@ -88,7 +88,7 @@ public class TaskBucketInteraction extends VisorTask {
         lavaCooldowns.put(handType, LiquidUtil.LAVA_COOLDOWN_TICKS);
     }
 
-    private void tryUseBucket(LocalPlayer player, ItemStack heldStack, Level level, HandType handType, Vec3 handTipPos) {
+    private void tryUseBucket(LocalPlayer player, ItemStack heldStack, Level level, PlayerPoseClient pose, HandType handType, Vec3 handTipPos) {
         if (scoopCooldowns.get(handType) > 0) {
             return;
         }
@@ -103,9 +103,27 @@ public class TaskBucketInteraction extends VisorTask {
             return;
         }
 
+        if (tryFluidBucket(pose, heldStack, handType, handTipPos)) {
+            return;
+        }
+
         if (heldStack.is(Items.WATER_BUCKET)) {
             tryCatchEntity(player, level, handType, handTipPos);
         }
+    }
+
+    private boolean tryFluidBucket(PlayerPoseClient pose, ItemStack heldStack, HandType handType, Vec3 handTipPos) {
+        if (!LiquidUtil.isFluidableBucket(heldStack) || !LiquidUtil.isBucketUpsideDown(pose.getGripHand(handType))) {
+            return false;
+        }
+
+        FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
+        buf.writeInt(handType.ordinal());
+        writeVec3(buf, handTipPos);
+        NetworkHelper.sendToServer(AddonNetworking.FLUID_BUCKET_C2S, buf);
+        scoopCooldowns.put(handType, LiquidUtil.SCOOP_COOLDOWN_TICKS);
+        VisorAPI.client().getInputManager().triggerHapticPulse(handType, 0.08F);
+        return true;
     }
 
     private void tryScoopFluid(Level level, HandType handType, Vec3 handTipPos) {
