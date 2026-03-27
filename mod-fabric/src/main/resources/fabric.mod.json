@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "visor_liquidbacket",
+  "id": "visor_liquidbucket",
   "version": "${version}",
 
   "name": "Visor Liquid Bucket",

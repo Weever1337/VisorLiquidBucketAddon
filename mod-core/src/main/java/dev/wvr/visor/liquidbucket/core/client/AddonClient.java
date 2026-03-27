@@ -15,7 +15,7 @@ public class AddonClient implements VisorAddon {
 
     @Override
     public @Nullable String getAddonPackagePath() {
-        return "dev.wvr.visor.liquidbacket.core.client";
+        return "dev.wvr.visor.liquidbucket.core.client";
     }
 
     @Override

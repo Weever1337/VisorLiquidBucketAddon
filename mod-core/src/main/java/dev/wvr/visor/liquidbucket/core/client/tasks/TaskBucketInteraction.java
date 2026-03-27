@@ -112,7 +112,7 @@ public class TaskBucketInteraction extends VisorTask {
     }
 
     private boolean tryFluidBucket(PlayerPoseClient pose, ItemStack heldStack, HandType handType, Vec3 handTipPos) {
-        if (!LiquidUtil.isFluidableBucket(heldStack) || !LiquidUtil.isBucketUpsideDown(pose.getGripHand(handType))) {
+        if (!LiquidUtil.isFluidableBucket(heldStack) || !LiquidUtil.isBucketUpsideDown(pose.getHand(handType))) {
             return false;
         }
 

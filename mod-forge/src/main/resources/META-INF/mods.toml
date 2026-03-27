@@ -3,7 +3,7 @@ loaderVersion = "[46,)"
 license = "MIT"
 
 [[mods]]
-modId = "visor_liquidbacket"
+modId = "visor_liquidbucket"
 version = "${version}"
 displayName = "Visor Liquid Bucket"
 authors = "Weever"
@@ -12,21 +12,21 @@ description = '''
 Visor addon for scooping liquid and fish with VR controllers and vanilla buckets.
 '''
 
-[[dependencies.visor_liquidbacket]]
+[[dependencies.visor_liquidbucket]]
 modId = "visor"
 mandatory = true
 versionRange = "[0.3.0,)"
 ordering = "AFTER"
 side = "BOTH"
 
-[[dependencies.visor_liquidbacket]]
+[[dependencies.visor_liquidbucket]]
 modId = "forge"
 mandatory = true
 versionRange = "[46,)"
 ordering = "AFTER"
 side = "BOTH"
 
-[[dependencies.visor_liquidbacket]]
+[[dependencies.visor_liquidbucket]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.20,1.20.1]"

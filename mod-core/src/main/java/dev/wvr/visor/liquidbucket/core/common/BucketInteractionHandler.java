@@ -40,6 +40,10 @@ public final class BucketInteractionHandler {
             return;
         }
 
+        if (!LiquidUtil.isBucketUpsideDown(vrPlayer.getPoseData().getHand(handType))) {
+            return;
+        }
+
         if (!LiquidUtil.isClientTipNearServerHand(vrPlayer, handType, handTipPos)) {
             return;
         }

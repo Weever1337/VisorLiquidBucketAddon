@@ -3,8 +3,8 @@ package dev.wvr.visor.liquidbucket.core.common;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -27,20 +27,20 @@ public class LiquidUtil {
     public static final double FLUID_PICKUP_DEPTH = 0.04D;
     public static final double BOTTLE_FILL_DEPTH = 0.08D;
     public static final double LAVA_BURN_DEPTH = 0.23D;
-    public static final double BUCKET_FLUID_UPSIDE_DOWN_Y_THRESHOLD = -0.45D;
-    
+    private static final float UPSIDE_DOWN_THRESHOLD = -0.55f;
+
     public static final Vector3f BOTTLE_TIP_OFFSET = new Vector3f(0.0F, -0.10F, -0.25F);
     public static final Vector3f BUCKET_TIP_OFFSET = new Vector3f(0.0F, -0.12F, -0.25F);
-    
+
     public static final int SCOOP_COOLDOWN_TICKS = 12;
     public static final int FISH_CAPTURE_COOLDOWN_TICKS = 4;
     public static final int LAVA_COOLDOWN_TICKS = 20;
     public static final double FISH_CAPTURE_RADIUS = 0.65D;
     public static final double FISH_CAPTURE_HITBOX_INFLATE = 0.20D;
     public static final double FISH_CAPTURE_MAX_DISTANCE_SQR = 0.64D;
-    
+
     public static Vec3 getInteractionTip(PlayerPoseClient pose, HandType handType, ItemStack heldStack) {
-        return getInteractionTip(pose.getGripHand(handType), heldStack);
+        return getInteractionTip(pose.getHand(handType), heldStack);
     }
 
     public static Vec3 getInteractionTip(VRPose handPose, ItemStack heldStack) {
@@ -66,7 +66,9 @@ public class LiquidUtil {
     }
 
     public static boolean isBucketUpsideDown(VRPose handPose) {
-        return handPose.getCustomVector(new Vector3f(0.0F, 1.0F, 0.0F)).y <= BUCKET_FLUID_UPSIDE_DOWN_Y_THRESHOLD;
+        Vector3f localUp = new Vector3f(0.0f, 1.0f, 0.0f);
+        Vector3f worldUp = handPose.getCustomVector(localUp).normalize();
+        return worldUp.y <= UPSIDE_DOWN_THRESHOLD;
     }
 
     public static boolean isHandDeepEnough(ServerPlayer player, BlockPos blockPos, Vec3 handTipPos, FluidState fluidState, double minDepth) {

@@ -15,7 +15,7 @@ public class VRLiquidBucketServer implements VisorAddon {
 
     @Override
     public @Nullable String getAddonPackagePath() {
-        return "dev.wvr.visor.liquidbacket.core.server";
+        return "dev.wvr.visor.liquidbucket.core.server";
     }
 
     @Override
